@@ -3,20 +3,19 @@ import morgan from 'morgan';
 import championsService from './services/champions.service';
 import itemsService from './services/items.service';
 import summonersService from './services/summoners.service';
+import runesService from './services/runes.service';
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.get('/', async (req, res) => {
-    const champion = await championsService.getRandomChampion();
-    const summoners = await summonersService.getRandomSummoner();
-    const items = await itemsService.getRandomItemsList();
-    res.json({
-        champion,
-        summoners,
-        items
-    });
+    // const champion = await championsService.getRandomChampion();
+    // const summoners = await summonersService.getRandomSummoner();
+    // const items = await itemsService.getRandomItemsList();
+    const runes = await runesService.getRandomRunes();
+
+    res.json(runes);
 });
 
 app.listen(3000, () => {
