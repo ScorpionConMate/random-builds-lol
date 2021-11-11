@@ -54,7 +54,7 @@ class RunesService {
         const maxLength = 3
         for (let i = 0; i < maxSelection; i++) {
             const secondaryRune = path.slots[1].runes[Math.floor(Math.random() * path.slots[1].runes.length)];
-            if (secondaryRunes.length < maxLength) {
+            if (secondaryRunes.length < maxLength && !secondaryRunes.includes(secondaryRune)) {
                 secondaryRunes.push(secondaryRune);
             }
         }

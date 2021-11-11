@@ -1,14 +1,14 @@
 class ImageService {
     getChampImage(champName) {
-        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/${champName}.png`;
+        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/${champName}`;
     }
 
     getItemImage(itemId) {
-        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/item/${itemId}.png`;
+        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/item/${itemId}`;
     }
 
     getSummonerSpellImage(spellId) {
-        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/spell/${spellId}.png`;
+        return `http://ddragon.leagueoflegends.com/cdn/11.22.1/img/spell/${spellId}`;
     }
 
     getMainRuneImage(path) {

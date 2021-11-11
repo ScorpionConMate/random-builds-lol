@@ -10,12 +10,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.get('/', async (req, res) => {
-    // const champion = await championsService.getRandomChampion();
-    // const summoners = await summonersService.getRandomSummoner();
-    // const items = await itemsService.getRandomItemsList();
+    const champion = await championsService.getRandomChampion();
+    const summoners = await summonersService.getRandomSummoner();
+    const items = await itemsService.getRandomItemsList();
     const runes = await runesService.getRandomRunes();
 
-    res.json(runes);
+    res.json({
+        champion,
+        summoners,
+        items,
+        runes
+    });
 });
 
 app.listen(3000, () => {

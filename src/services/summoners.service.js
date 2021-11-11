@@ -1,4 +1,5 @@
 import ApiService from './api.service';
+import imagesService from './images.service';
 
 class SummonerService {
     constructor() {
@@ -22,7 +23,11 @@ class SummonerService {
                 const summoner = summoners.data.data[key];
                 return summoner
             })
-            .filter(summoner => !this.excludedItems.includes(summoner.id));
+            .filter(summoner => !this.excludedItems.includes(summoner.id))
+            .map(summoner => {
+                summoner.image.full = imagesService.getSummonerSpellImage(summoner.image.full);
+                return summoner;
+            });
     }
 
     async getRandomSummoner(quantity = 2) {

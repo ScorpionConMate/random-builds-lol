@@ -1,4 +1,5 @@
 import ApiService from './api.service';
+import imagesService from './images.service';
 
 class ItemsService {
     constructor() {
@@ -56,6 +57,10 @@ class ItemsService {
                 allItems.data[item].depth === 3
             )
             .map(item => allItems.data[item])
+            .map(item => {
+                item.image.full = imagesService.getItemImage(item.image.full);
+                return item;
+            });
     }
 
 

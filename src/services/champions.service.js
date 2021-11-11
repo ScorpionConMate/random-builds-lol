@@ -20,7 +20,12 @@ class ChampionService {
          * @type {IChampionsResponse}
          */
         const { data: { data } } = await ApiService.get(this.url)
-        return Object.keys(data).map(key => data[key]);
+        return Object.keys(data)
+            .map(key => data[key])
+            .map(champion => {
+                champion.image.full = imagesService.getChampImage(champion.image.full);
+                return champion;
+            });
     }
 
     async getChampion(championId) {
