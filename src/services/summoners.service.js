@@ -8,20 +8,20 @@ class SummonerService {
             'SummonerSmite',
             'SummonerPoroRecall',
             'SummonerPoroThrow',
+            'SummonerMana',
             'SummonerSnowURFSnowball_Mark',
             'SummonerSnowball',
             'Summoner_UltBook_Placeholder',
             'Summoner_Mana'
-
-        ]
+        ];
+        this.data = this.getSummoners();
     }
 
     async getSummoners() {
         const summoners = await ApiService.get(this.url);
         return Object.keys(summoners.data.data)
             .map(key => {
-                const summoner = summoners.data.data[key];
-                return summoner
+                return summoners.data.data[key];
             })
             .filter(summoner => !this.excludedItems.includes(summoner.id))
             .map(summoner => {
@@ -31,7 +31,7 @@ class SummonerService {
     }
 
     async getRandomSummoner(quantity = 2) {
-        const summoners = await this.getSummoners();
+        const summoners = await this.data;
         const randomSummoners = [];
         for (let i = 0; i < quantity; i++) {
             const randomIndex = Math.floor(Math.random() * summoners.length);

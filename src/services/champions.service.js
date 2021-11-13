@@ -10,6 +10,7 @@ import imagesService from './images.service';
 class ChampionService {
     constructor() {
         this.url = `/data/en_US/champion.json`;
+        this.data = this.getChampions();
     }
 
     /**
@@ -34,7 +35,7 @@ class ChampionService {
     }
 
     async getRandomChampion() {
-        const champions = await this.getChampions();
+        const champions = await this.data;
         return champions[Math.floor(Math.random() * champions.length)];
     }
 }

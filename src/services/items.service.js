@@ -1,6 +1,6 @@
 import ApiService from './api.service';
 import imagesService from './images.service';
-
+import fs from 'fs';
 class ItemsService {
     constructor() {
         this.url = `/data/en_US/item.json`;
@@ -29,19 +29,23 @@ class ItemsService {
             "Trinity Force",
             "Turbo Chemtank",
         ];
+        this.data = this.getItems();
     }
     async getItems() {
-        return (await ApiService.get(this.url)).data;
+        const { data: { data } } = await ApiService.get(this.url);
+        return Object.keys(data).map(item => {
+            data[item].image.full = imagesService.getItemImage(data[item].image.full);
+            return data[item];
+        });
     }
 
     async getBoots() {
-        const allItems = await this.getItems();
-        return Object.keys(allItems.data)
+        const allItems = await this.data;
+        return allItems
             .filter(item =>
-                allItems.data[item].tags.includes('Boots') &&
-                allItems.data[item].depth === 2
+                item.tags.includes('Boots') &&
+                item.depth === 2
             )
-            .map(item => allItems.data[item]);
     }
 
     async getRandomBoots() {
@@ -50,17 +54,12 @@ class ItemsService {
     }
 
     async getItemsFull() {
-        const allItems = await this.getItems();
-        return Object.keys(allItems.data)
+        const allItems = await this.data;
+        return allItems
             .filter(item =>
-                !allItems.data[item].tags.includes('Boots') &&
-                allItems.data[item].depth === 3
-            )
-            .map(item => allItems.data[item])
-            .map(item => {
-                item.image.full = imagesService.getItemImage(item.image.full);
-                return item;
-            });
+                !item.tags.includes('Boots') &&
+                item.depth === 3
+            );
     }
 
 
@@ -68,7 +67,6 @@ class ItemsService {
         const allItems = await this.getItemsFull();
         return allItems
             .filter(item => !this.mythicItems.includes(item.name))
-            .filter(item => item.name !== 'Boots of Swiftness')
             .sort(() => 0.5 - Math.random()).slice(0, quantity);
     }
 

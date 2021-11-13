@@ -11,6 +11,8 @@ class RunesService {
             'Resolve',
             'Sorcery'
         ];
+
+        this.data = this.getRunes();
     }
 
 
@@ -31,7 +33,7 @@ class RunesService {
 
     async getRandomPath() {
         const path = this.runesPaths[Math.floor(Math.random() * this.runesPaths.length)];
-        const runes = await this.getRunes();
+        const runes = await this.data;
         const runesByPath = runes.find(rune => rune.name === path);
         return runesByPath;
     }
@@ -53,7 +55,7 @@ class RunesService {
         const secondaryRunes = [];
         const maxLength = 3
         for (let i = 0; i < maxSelection; i++) {
-            const secondaryRune = path.slots[1].runes[Math.floor(Math.random() * path.slots[1].runes.length)];
+            const secondaryRune = path.slots[i + 2].runes[Math.floor(Math.random() * path.slots[i + 2].runes.length)];
             if (secondaryRunes.length < maxLength && !secondaryRunes.includes(secondaryRune)) {
                 secondaryRunes.push(secondaryRune);
             }

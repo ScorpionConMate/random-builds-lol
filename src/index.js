@@ -8,8 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-
-app.get('/', async (req, res) => {
+app.use(express.static('public'));
+app.get('/api', async (req, res) => {
     const champion = await championsService.getRandomChampion();
     const summoners = await summonersService.getRandomSummoner();
     const items = await itemsService.getRandomItemsList();
